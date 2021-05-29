@@ -1,5 +1,6 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 
+import { Logo } from "./Logo";
 import { NotificationsNav } from "./NotificationsNav";
 import { Profile } from "./Profile";
 import { SearchBox } from "./SearchBox";
@@ -16,14 +17,7 @@ export function Header() {
       px="6"
       align="center"
     >
-      <Text fontSize="3xl" fontWeight="bold" letterSpacing="tight" w="64">
-        dash
-        <Text as="span" color="pink.500">
-          .
-        </Text>
-        go
-      </Text>
-
+      <Logo />
       <SearchBox />
 
       <Flex align="center" ml="auto">
