@@ -1,8 +1,8 @@
-import { Flex, Icon, Input, Text } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 
-import { RiSearchLine } from "react-icons/ri";
 import { NotificationsNav } from "./NotificationsNav";
 import { Profile } from "./Profile";
+import { SearchBox } from "./SearchBox";
 
 export function Header() {
   return (
@@ -24,30 +24,7 @@ export function Header() {
         go
       </Text>
 
-      <Flex
-        as="label"
-        position="relative"
-        flex="1"
-        alignSelf="center"
-        maxW={400}
-        py="4"
-        px="8"
-        ml="6"
-        color="gray.200"
-        bg="gray.800"
-        borderRadius="full"
-      >
-        <Input
-          px="4"
-          mr="4"
-          color="gray.50"
-          variant="unstyled"
-          placeholder="Search the platform"
-          _placeholder={{ color: "gray.400" }}
-        />
-
-        <Icon as={RiSearchLine} fontSize="20" />
-      </Flex>
+      <SearchBox />
 
       <Flex align="center" ml="auto">
         <NotificationsNav />
