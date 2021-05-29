@@ -1,10 +1,11 @@
-import { Avatar, Box, Flex, HStack, Icon, Input, Text } from "@chakra-ui/react";
+import { Flex, HStack, Icon, Input, Text } from "@chakra-ui/react";
 
 import {
   RiNotificationLine,
   RiSearchLine,
   RiUserAddLine,
 } from "react-icons/ri";
+import { Profile } from "./Profile";
 
 export function Header() {
   return (
@@ -65,20 +66,7 @@ export function Header() {
           <Icon as={RiUserAddLine} fontSize="20" />
         </HStack>
 
-        <Flex align="center">
-          <Box mr="4" textAlign="right">
-            <Text>Natan Tavares</Text>
-            <Text color="gray.300" fontSize="small">
-              nattantavares.s15@gmail.com
-            </Text>
-          </Box>
-
-          <Avatar
-            size="md"
-            name="Natan Tavares"
-            src="https://github.com/NatanTavares.png"
-          />
-        </Flex>
+        <Profile />
       </Flex>
     </Flex>
   );
