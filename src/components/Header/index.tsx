@@ -1,10 +1,7 @@
-import { Flex, HStack, Icon, Input, Text } from "@chakra-ui/react";
+import { Flex, Icon, Input, Text } from "@chakra-ui/react";
 
-import {
-  RiNotificationLine,
-  RiSearchLine,
-  RiUserAddLine,
-} from "react-icons/ri";
+import { RiSearchLine } from "react-icons/ri";
+import { NotificationsNav } from "./NotificationsNav";
 import { Profile } from "./Profile";
 
 export function Header() {
@@ -53,19 +50,7 @@ export function Header() {
       </Flex>
 
       <Flex align="center" ml="auto">
-        <HStack
-          spacing="8"
-          mx="8"
-          pr="8"
-          py="1"
-          color="gray.300"
-          borderRightWidth={1}
-          borderColor="gray.800"
-        >
-          <Icon as={RiNotificationLine} fontSize="20" />
-          <Icon as={RiUserAddLine} fontSize="20" />
-        </HStack>
-
+        <NotificationsNav />
         <Profile />
       </Flex>
     </Flex>
