@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useQuery } from "react-query";
 import {
   Box,
   Button,
@@ -6,6 +7,7 @@ import {
   Flex,
   Heading,
   Icon,
+  Spinner,
   Table,
   Tbody,
   Td,
@@ -21,21 +23,19 @@ import { Sidebar } from "../../components/Sidebar";
 
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
 import { Pagination } from "../../components/Pagination";
-import { useEffect } from "react";
 
 export default function UserList() {
+  const { data, isLoading, error } = useQuery("users", async () => {
+    const response = await fetch("http://localhost:3000/api/users");
+    const data = await response.json();
+
+    return data;
+  });
+
   const isWideVersion = useBreakpointValue({
     base: false,
     lg: true,
   });
-
-  useEffect(() => {
-    fetch("http://localhost:3000/api/users")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      });
-  }, []);
 
   return (
     <Box>
@@ -62,103 +62,115 @@ export default function UserList() {
             </Link>
           </Flex>
 
-          <Table colorScheme="whiteAlpha">
-            <Thead>
-              <Tr>
-                <Th px={["4", "4", "6"]} color="gray.300" w="8">
-                  <Checkbox colorScheme="pink" />
-                </Th>
-                <Th>User</Th>
-                {isWideVersion && <Th>Date</Th>}
-                {isWideVersion && <Th w="8"></Th>}
-              </Tr>
-            </Thead>
-            <Tbody>
-              <Tr>
-                <Td px={["4", "4", "6"]}>
-                  <Checkbox colorScheme="pink" />
-                </Td>
-                <Td>
-                  <Box>
-                    <Text fontWeight="bold">Natan Tavares</Text>
-                    <Text fontSize="sm" color="gray.300">
-                      nattantavares.s15@gmail.com
-                    </Text>
-                  </Box>
-                </Td>
-                <Td>{isWideVersion && <Text>04 de Abril, 2021</Text>}</Td>
-                {isWideVersion && (
-                  <Td>
-                    <Button
-                      as="a"
-                      size="sm"
-                      fontSize="sm"
-                      colorScheme="purple"
-                      leftIcon={<Icon as={RiPencilLine} fontSize="16" />}
-                    >
-                      Edit
-                    </Button>
-                  </Td>
-                )}
-              </Tr>
-              <Tr>
-                <Td px={["4", "4", "6"]}>
-                  <Checkbox colorScheme="pink" />
-                </Td>
-                <Td>
-                  <Box>
-                    <Text fontWeight="bold">Natan Tavares</Text>
-                    <Text fontSize="sm" color="gray.300">
-                      nattantavares.s15@gmail.com
-                    </Text>
-                  </Box>
-                </Td>
-                <Td>{isWideVersion && <Text>04 de Abril, 2021</Text>}</Td>
-                {isWideVersion && (
-                  <Td>
-                    <Button
-                      as="a"
-                      size="sm"
-                      fontSize="sm"
-                      colorScheme="purple"
-                      leftIcon={<Icon as={RiPencilLine} fontSize="16" />}
-                    >
-                      Edit
-                    </Button>
-                  </Td>
-                )}
-              </Tr>
-              <Tr>
-                <Td px={["4", "4", "6"]}>
-                  <Checkbox colorScheme="pink" />
-                </Td>
-                <Td>
-                  <Box>
-                    <Text fontWeight="bold">Natan Tavares</Text>
-                    <Text fontSize="sm" color="gray.300">
-                      nattantavares.s15@gmail.com
-                    </Text>
-                  </Box>
-                </Td>
-                <Td>{isWideVersion && <Text>04 de Abril, 2021</Text>}</Td>
-                {isWideVersion && (
-                  <Td>
-                    <Button
-                      as="a"
-                      size="sm"
-                      fontSize="sm"
-                      colorScheme="purple"
-                      leftIcon={<Icon as={RiPencilLine} fontSize="16" />}
-                    >
-                      Edit
-                    </Button>
-                  </Td>
-                )}
-              </Tr>
-            </Tbody>
-          </Table>
+          {isLoading ? (
+            <Flex justify="center">
+              <Spinner />
+            </Flex>
+          ) : error ? (
+            <Flex justify="center">
+              <Text>Fails to get data from users.</Text>
+            </Flex>
+          ) : (
+            <>
+              <Table colorScheme="whiteAlpha">
+                <Thead>
+                  <Tr>
+                    <Th px={["4", "4", "6"]} color="gray.300" w="8">
+                      <Checkbox colorScheme="pink" />
+                    </Th>
+                    <Th>User</Th>
+                    {isWideVersion && <Th>Date</Th>}
+                    {isWideVersion && <Th w="8"></Th>}
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  <Tr>
+                    <Td px={["4", "4", "6"]}>
+                      <Checkbox colorScheme="pink" />
+                    </Td>
+                    <Td>
+                      <Box>
+                        <Text fontWeight="bold">Natan Tavares</Text>
+                        <Text fontSize="sm" color="gray.300">
+                          nattantavares.s15@gmail.com
+                        </Text>
+                      </Box>
+                    </Td>
+                    <Td>{isWideVersion && <Text>04 de Abril, 2021</Text>}</Td>
+                    {isWideVersion && (
+                      <Td>
+                        <Button
+                          as="a"
+                          size="sm"
+                          fontSize="sm"
+                          colorScheme="purple"
+                          leftIcon={<Icon as={RiPencilLine} fontSize="16" />}
+                        >
+                          Edit
+                        </Button>
+                      </Td>
+                    )}
+                  </Tr>
+                  <Tr>
+                    <Td px={["4", "4", "6"]}>
+                      <Checkbox colorScheme="pink" />
+                    </Td>
+                    <Td>
+                      <Box>
+                        <Text fontWeight="bold">Natan Tavares</Text>
+                        <Text fontSize="sm" color="gray.300">
+                          nattantavares.s15@gmail.com
+                        </Text>
+                      </Box>
+                    </Td>
+                    <Td>{isWideVersion && <Text>04 de Abril, 2021</Text>}</Td>
+                    {isWideVersion && (
+                      <Td>
+                        <Button
+                          as="a"
+                          size="sm"
+                          fontSize="sm"
+                          colorScheme="purple"
+                          leftIcon={<Icon as={RiPencilLine} fontSize="16" />}
+                        >
+                          Edit
+                        </Button>
+                      </Td>
+                    )}
+                  </Tr>
+                  <Tr>
+                    <Td px={["4", "4", "6"]}>
+                      <Checkbox colorScheme="pink" />
+                    </Td>
+                    <Td>
+                      <Box>
+                        <Text fontWeight="bold">Natan Tavares</Text>
+                        <Text fontSize="sm" color="gray.300">
+                          nattantavares.s15@gmail.com
+                        </Text>
+                      </Box>
+                    </Td>
+                    <Td>{isWideVersion && <Text>04 de Abril, 2021</Text>}</Td>
+                    {isWideVersion && (
+                      <Td>
+                        <Button
+                          as="a"
+                          size="sm"
+                          fontSize="sm"
+                          colorScheme="purple"
+                          leftIcon={<Icon as={RiPencilLine} fontSize="16" />}
+                        >
+                          Edit
+                        </Button>
+                      </Td>
+                    )}
+                  </Tr>
+                </Tbody>
+              </Table>
 
-          <Pagination />
+              <Pagination />
+            </>
+          )}
         </Box>
       </Flex>
     </Box>
