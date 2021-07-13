@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { useQuery } from "react-query";
-import { api } from "../../services/api";
+import { useUsers } from "../../services/hooks/useUsers";
 import {
   Box,
   Button,
@@ -25,41 +24,8 @@ import { Pagination } from "../../components/Pagination";
 
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
 
-type User = {
-  id: string;
-  name: string;
-  email: string;
-  createdAt: string;
-};
-
-type Data = {
-  users: User[];
-};
-
 export default function UserList() {
-  const { data, isLoading, isFetching, error } = useQuery(
-    "users",
-    async () => {
-      const response = await api.get("users");
-      const data: Data = response.data;
-
-      const users = data.users.map((user) => {
-        return {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          createdAt: new Date(user.createdAt).toLocaleString("pt-BR", {
-            day: "2-digit",
-            month: "long",
-            year: "numeric",
-          }),
-        };
-      });
-
-      return users;
-    },
-    { staleTime: 1000 * 60 * 5 } // 5 minutes
-  );
+  const { data, isLoading, isFetching, error } = useUsers();
 
   const isWideVersion = useBreakpointValue({
     base: false,
@@ -147,7 +113,6 @@ export default function UserList() {
                   ))}
                 </Tbody>
               </Table>
-
               <Pagination />
             </>
           )}
