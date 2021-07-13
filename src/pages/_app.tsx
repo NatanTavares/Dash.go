@@ -1,5 +1,6 @@
 import { AppProps } from "next/app";
 import { makeServer } from "../services/mirage";
+import { ReactQueryDevtools } from "react-query/devtools";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { SidebarDrawerProvider } from "../contexts/SidebarDrawerContext";
 
@@ -15,6 +16,8 @@ const queryClient = new QueryClient();
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools />
+
       <ChakraProvider theme={theme}>
         <SidebarDrawerProvider>
           <Component {...pageProps} />
