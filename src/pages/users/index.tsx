@@ -53,8 +53,6 @@ export default function UserList() {
       };
     });
 
-    console.log(users);
-
     return users;
   });
 
