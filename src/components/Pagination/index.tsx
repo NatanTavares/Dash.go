@@ -48,7 +48,8 @@ export function Pagination({
       spacing="6"
     >
       <Box>
-        <strong>0</strong> to <strong>10</strong> out of <strong>50</strong>
+        <strong>0</strong> to <strong>10</strong> out of{" "}
+        <strong>{totalCountOfRegisters}</strong>
       </Box>
 
       <HStack spacing="2">
