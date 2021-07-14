@@ -1,5 +1,5 @@
 import { api } from "../api";
-import { useQuery } from "react-query";
+import { useQuery, UseQueryOptions, UseQueryResult } from "react-query";
 import { queryClient } from "../queryClient";
 
 type User = {
@@ -60,8 +60,12 @@ export async function onPrefetchUser(userId: string) {
   });
 }
 
-export function useUsers(page: number) {
+export function useUsers(
+  page: number,
+  options?: UseQueryOptions<getUsersResponse>
+) {
   return useQuery(["users", page], () => getUsers(page), {
     staleTime: 1000 * 60 * 10, // 10 minutes
+    ...options,
   });
 }

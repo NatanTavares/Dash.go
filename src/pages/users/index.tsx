@@ -1,6 +1,11 @@
 import NextLink from "next/link";
 import { useState } from "react";
-import { onPrefetchUser, useUsers } from "../../services/hooks/useUsers";
+import { GetServerSideProps } from "next";
+import {
+  getUsers,
+  onPrefetchUser,
+  useUsers,
+} from "../../services/hooks/useUsers";
 import {
   Box,
   Button,
@@ -26,9 +31,23 @@ import { Pagination } from "../../components/Pagination";
 
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
 
-export default function UserList() {
+type User = {
+  id: string;
+  name: string;
+  email: string;
+  createdAt: string;
+};
+
+type UserListProps = {
+  users: User[];
+  totalCount: number;
+};
+
+export default function UserList({ users, totalCount }: UserListProps) {
   const [page, setPage] = useState(1);
-  const { data, isLoading, isFetching, error } = useUsers(page);
+  const { data, isLoading, isFetching, error } = useUsers(page, {
+    initialData: { users, totalCount },
+  });
 
   const isWideVersion = useBreakpointValue({
     base: false,
@@ -137,3 +156,11 @@ export default function UserList() {
     </Box>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const { users, totalCount } = await getUsers(1);
+
+  return {
+    props: { users, totalCount },
+  };
+};
