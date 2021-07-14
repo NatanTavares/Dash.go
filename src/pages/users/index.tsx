@@ -1,6 +1,6 @@
 import NextLink from "next/link";
 import { useState } from "react";
-import { useUsers } from "../../services/hooks/useUsers";
+import { onPrefetchUser, useUsers } from "../../services/hooks/useUsers";
 import {
   Box,
   Button,
@@ -25,8 +25,6 @@ import { Sidebar } from "../../components/Sidebar";
 import { Pagination } from "../../components/Pagination";
 
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
-import { queryClient } from "../../services/queryClient";
-import { api } from "../../services/api";
 
 export default function UserList() {
   const [page, setPage] = useState(1);
@@ -37,17 +35,8 @@ export default function UserList() {
     lg: true,
   });
 
-  async function handlePrefetchUser(userId: string) {
-    await queryClient.prefetchQuery(
-      ["user", userId],
-      async () => {
-        const { data } = await api.get(`users/${userId}`);
-        return data;
-      },
-      {
-        staleTime: 1000 * 60 * 10, // 10 minutes
-      }
-    );
+  function handlePrefetchUser(userId: string) {
+    onPrefetchUser(userId);
   }
 
   return (
